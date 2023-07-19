@@ -1,6 +1,44 @@
 import Logo from "../../assets/images/recipeLogo.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { SwapSpinner } from "react-spinners-kit";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!username || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const result = await axios.post("http://localhost:3000/auth/login", {
+        username,
+        password,
+      });
+
+      if (result?.data?.success === true) {
+        toast.success("Logged in successfully");
+        console.log(result.data);
+        setLoading(false);
+        navigate("/home", { replace: true });
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="flex h-screen flex-1 flex-col justify-center px-6 py-8 lg:px-8">
@@ -21,16 +59,16 @@ export default function Login() {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="your-email@email.com"
+                  id="username"
+                  name="username"
+                  type="username"
+                  autoComplete="off"
                   className="block w-full rounded-md py-1.5 border-2 border-gray-500 px-3"
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
@@ -51,6 +89,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   className="block w-full rounded-md py-1.5 border-2 border-gray-500 px-3"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -58,9 +97,10 @@ export default function Login() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-bold leading-7 text-white shadow-sm hover:bg-secondary hover:transition-colors duration-300"
+                className="flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-bold text-white shadow-sm hover:bg-secondary hover:transition-colors duration-300"
+                onClick={handleSubmit}
               >
-                Sign in
+                {loading ? <SwapSpinner size={30} color={"#fff"} /> : "Sign in"}
               </button>
             </div>
 

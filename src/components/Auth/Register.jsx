@@ -43,7 +43,9 @@ export default function Register() {
         password,
       });
 
-      if (result.status === 200) {
+      console.log(result);
+
+      if (result?.status === 200) {
         toast.success("Account created successfully");
         setLoading(false);
         navigate("/", { replace: true });
