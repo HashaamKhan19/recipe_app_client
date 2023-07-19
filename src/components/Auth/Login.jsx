@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { SwapSpinner } from "react-spinners-kit";
+import { useCookies } from "react-cookie";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  /* eslint-disable */
+  const [_, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
 
@@ -27,11 +31,16 @@ export default function Login() {
         password,
       });
 
+      console.log(result);
+
+      setCookies("access_token", result?.data?.token);
+      localStorage.setItem("userID", result.data.user._id);
+
       if (result?.data?.success === true) {
         toast.success("Logged in successfully");
         console.log(result.data);
         setLoading(false);
-        navigate("/home", { replace: true });
+        navigate("/", { replace: true });
       }
     } catch (error) {
       toast.error(error.response.data.message);
