@@ -2,7 +2,7 @@
 import React from "react";
 
 const All = () => {
-  return <div>All</div>;
+  return <div className="px-[1%]">All</div>;
 };
 
 export default All;
