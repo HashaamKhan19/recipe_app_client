@@ -6,6 +6,7 @@ export default {
       colors: {
         primary: "#F6546a",
         secondary: "#FF7373",
+        tertiary: "#FFB8B8",
       },
       fontFamily: {
         sans: ["Urbanist", "sans-serif"],

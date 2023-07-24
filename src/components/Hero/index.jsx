@@ -1,15 +1,8 @@
 /*eslint-disable*/
 import React from "react";
-import Header from "../Layout";
-import HeroSection from "./HeroSection";
 
 const Hero = () => {
-  return (
-    <div>
-      <Header />
-      <HeroSection />
-    </div>
-  );
+  return <div className="px-[1%]">All Recipes here</div>;
 };
 
 export default Hero;
