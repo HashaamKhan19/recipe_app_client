@@ -3,6 +3,7 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import RequireAuth from "./components/Auth/RequireAuth";
 import Create from "./components/Recipe/Create";
+import Saved from "./components/Recipe/Saved";
 import All from "./components/Recipe/All";
 import Header from "./components/Layout";
 
@@ -23,6 +24,7 @@ function App() {
           >
             <Route path="/" element={<All />} />
             <Route path="/createRecipe" element={<Create />} />
+            <Route path="/savedRecipes" element={<Saved />} />
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

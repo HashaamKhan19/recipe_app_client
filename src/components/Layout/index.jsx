@@ -46,6 +46,19 @@ const Header = () => {
             Create Recipe
           </h1>
 
+          <h1
+            className={`font-semibold text-xl cursor-pointer ${
+              isLinkActive("/savedRecipes")
+                ? "text-secondary"
+                : "hover:text-secondary"
+            }`}
+            onClick={() => {
+              navigate("/savedRecipes");
+            }}
+          >
+            Saved Recipes
+          </h1>
+
           <button
             onClick={() => {
               setCookies("access_token", "");

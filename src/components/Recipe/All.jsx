@@ -11,6 +11,9 @@ import {
 const All = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [savedRecipes, setSavedRecipes] = useState([]);
+
+  const userID = localStorage.getItem("userID");
 
   useEffect(() => {
     axios.get("http://localhost:3000/recipes").then((res) => {
@@ -18,6 +21,12 @@ const All = () => {
       setRecipes(res?.data?.recipes);
       setLoading(false);
     });
+
+    axios
+      .get(`http://localhost:3000/recipes/savedRecipes/ids/${userID}`)
+      .then((res) => {
+        setSavedRecipes(res?.data);
+      });
   }, []);
 
   return (
@@ -29,7 +38,7 @@ const All = () => {
       )}
 
       {recipes?.map((recipe, idx) => {
-        return <Card recipe={recipe} index={idx} />;
+        return <Card recipe={recipe} index={idx} savedRecipes={savedRecipes} />;
       })}
     </div>
   );

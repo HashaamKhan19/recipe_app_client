@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { BallSpinner, ImpulseSpinner, StageSpinner } from "react-spinners-kit";
 
-const Card = ({ recipe, index }) => {
+const Card = ({ recipe, index, savedRecipes }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSave = async (id) => {
@@ -40,8 +40,11 @@ const Card = ({ recipe, index }) => {
         <div className="flex flex-row justify-between mt-2">
           <h2 className="text-lg font-semibold">{recipe.name}</h2>
           <button
-            className="bg-primary text-white rounded-sm px-2 mt-1"
+            className="bg-primary text-white rounded-sm px-2 mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => handleSave(recipe._id)}
+            disabled={savedRecipes?.savedRecipes?.find(
+              (savedRecipe) => savedRecipe === recipe._id
+            )}
           >
             {loading ? <StageSpinner size={20} color={"#fff"} /> : "Save"}
           </button>
